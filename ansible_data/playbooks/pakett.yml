@@ -1,0 +1,28 @@
+---
+- name: Check for installed packages
+  hosts: all
+  tasks:
+    - name: Check if Fish is installed
+      command: dpkg -l | grep -w 'fish'
+      register: fish_installed
+      ignore_errors: yes
+    
+    - name: Check if Tmux is installed
+      command: dpkg -l | grep -w 'tmux'
+      register: tmux_installed
+      ignore_errors: yes
+    
+    - name: Check if mc is installed
+      command: dpkg -l | grep -w 'mc'
+      register: mc_installed
+      ignore_errors: yes
+    
+    - name: Check if git is installed
+      command: dpkg -l | grep -w 'git'
+      register: git_installed
+      ignore_errors: yes
+    
+    - name: Display installed packages
+      debug:
+        msg: "Fish: {{ fish_installed.rc }}, Tmux: {{ tmux_installed.rc }}, mc: {{ mc_installed.rc }}, git: {{ git_installed.rc }}"
+...

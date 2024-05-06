@@ -1,0 +1,38 @@
+---
+- name: Replace Apache with NGINX
+  hosts: all
+  tasks:
+    - name: Stop Apache
+      service:
+        name: apache2
+        state: stopped
+      when: ansible_service_mgr == 'systemd' and ansible_distribution == 'Ubuntu'
+    
+    - name: Stop Apache
+      service:
+        name: httpd
+        state: stopped
+      when: ansible_service_mgr == 'systemd' and ansible_distribution == 'OracleLinux'
+    
+    - name: Uninstall Apache
+      package:
+        name: apache2
+        state: absent
+      when: ansible_distribution == 'Ubuntu'
+    
+    - name: Uninstall Apache
+      package:
+        name: httpd
+        state: absent
+      when: ansible_distribution == 'OracleLinux'
+    
+    - name: Install NGINX
+      package:
+        name: nginx
+        state: present
+    
+    - name: Start NGINX
+      service:
+        name: nginx
+        state: started
+...

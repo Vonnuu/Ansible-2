@@ -1,0 +1,7 @@
+---
+- name: Webserver Apache2 install
+  hosts: all
+  become: true
+  roles:
+    - {role: webserver}
+...
